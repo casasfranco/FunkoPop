@@ -173,7 +173,7 @@ eval("__webpack_require__.r(__webpack_exports__);\n/* harmony import */ var boot
 /***/ (function(module, __webpack_exports__, __webpack_require__) {
 
 "use strict";
-eval("__webpack_require__.r(__webpack_exports__);\n/* harmony export (binding) */ __webpack_require__.d(__webpack_exports__, \"default\", function() { return Funko; });\nfunction _classCallCheck(instance, Constructor) { if (!(instance instanceof Constructor)) { throw new TypeError(\"Cannot call a class as a function\"); } }\n\n//Clase funko \nvar Funko = function Funko(codigo, nombre, mumSerie, descripcion, imagen, precio, categoria) {\n  _classCallCheck(this, Funko);\n\n  this.codigo = codigo;\n  this.nombre = nombre;\n  this.numSerie = numSerie;\n  this.descripcion = descripcion;\n  this.imagen = imagen;\n  this.precio = precio;\n  this.categoria = categoria;\n  this.destacado = false;\n  this.estado = 1;\n} //Methods\n;\n\n\n\n//# sourceURL=webpack:///./src/js/funko.js?");
+eval("__webpack_require__.r(__webpack_exports__);\n/* harmony export (binding) */ __webpack_require__.d(__webpack_exports__, \"default\", function() { return Funko; });\nfunction _classCallCheck(instance, Constructor) { if (!(instance instanceof Constructor)) { throw new TypeError(\"Cannot call a class as a function\"); } }\n\n//Clase funko \nvar Funko = function Funko(codigo, nombre, numSerie, categoria, descripcion, imagen, precio) {\n  _classCallCheck(this, Funko);\n\n  this.codigo = codigo;\n  this.nombre = nombre;\n  this.numSerie = numSerie;\n  this.categoria = categoria;\n  this.descripcion = descripcion;\n  this.imagen = imagen;\n  this.precio = precio;\n  this.destacado = false;\n  this.estado = 1;\n} //Methods\n;\n\n\n\n//# sourceURL=webpack:///./src/js/funko.js?");
 
 /***/ })
 
