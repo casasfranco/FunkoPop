@@ -46,11 +46,12 @@
                     <h4 class="text-center">Tabla de productos</h4>
                 </div>
                 <div class="col-2 text-right">
-                    <button class="btn btn-outline-info" data-toggle="modal" data-target="#modalProducto">Agregar</button>
+                    <button class="btn btn-outline-info" data-toggle="modal"
+                        data-target="#modalProducto">Agregar</button>
                 </div>
             </article>
             <article class="table-responsive">
-                <table class="table">
+                <table class="table" id="tablaFunko">
                     <thead class="thead-dark">
                         <tr>
                             <th scope="col">#</th>
@@ -93,7 +94,7 @@
                         </button>
                     </div>
                     <div class="modal-body">
-                        <form>
+                        <form onsubmit="agregarFunko(event)" id="formProducto">
                             <div class="form-grup">
                                 <label>Código</label>
                                 <input type="text" class="form-control" id="codigo" placeholder="Ej: FUN1234">
@@ -112,7 +113,8 @@
                             </div>
                             <div class="form-grup mt-2">
                                 <label>Descripción</label>
-                                <input type="text" class="form-control" id="descripcion" placeholder="Puede ingresar una descripcion ">
+                                <input type="text" class="form-control" id="descripcion"
+                                    placeholder="Puede ingresar una descripcion ">
                             </div>
                             <div class="form-grup mt-2">
                                 <label>Imagen</label>
