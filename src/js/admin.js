@@ -3,6 +3,9 @@ import "bootstrap";
 import "../css/style.css";
 import Funko from "./funko.js";
 import $ from "jquery";
+import Swal from "sweetalert2";
+import '@fortawesome/fontawesome-free/js/all.min';
+
 
 //inicializo variables
 let listaFunkos = [];
@@ -37,6 +40,17 @@ window.agregarFunko = function () {
 
   limpiarFormulario();
   leerProductos();
+
+  let ventanaModal = document.getElementById("modalFormulario");
+  $(ventanaModal).modal("show");
+  productoExistente = true;
+
+  //Alert 
+  Swal.fire(
+    'Producto agregado',
+    'Tu producto se agrego correctamente',
+    'success' //Nombre del icono
+  );
 };
 
 function limpiarFormulario() {
@@ -72,8 +86,12 @@ function dibujarTabla(_listaFunkos) {
               <td>${_listaFunkos[i].imagen}</td>
               <td>$${_listaFunkos[i].precio}</td>
               <td>
-                <button class="btn btn-outline-info" onclick="modificarProducto(${_listaFunkos[i].codigo})">Editar</button>
-                <button class="btn btn-outline-danger" onclick="eliminarProducto(this)" id="${_listaFunkos[i].codigo}">Eliminar</button>
+                <button class="btn btn-outline-info" onclick="modificarProducto(${_listaFunkos[i].codigo})">
+                  <i class="fas fa-edit"></i>
+                </button>
+                <button class="btn btn-outline-danger" onclick="eliminarProducto(this)" id="${_listaFunkos[i].codigo}">
+                  <i class="fas fa-trash"></i>
+                </button>
               </td>
             </tr>`;
 
@@ -100,13 +118,40 @@ window.eliminarProducto = function (botonEliminar) {
     //     }
     // }
     //Opcion 2
-    let datosFiltrados = _listaFunkos.filter(function (producto) {
-      return producto.codigo != botonEliminar.id;
-    });
+    Swal.fire({
+      title: 'Estas seguro de eliminar el producto?',
+      text: "Al eliminar no podras revertir esta acción!",
+      icon: 'warning',
+      showCancelButton: true,
+      confirmButtonColor: '#3085d6',
+      cancelButtonColor: '#d33',
+      confirmButtonText: 'Si, borrar!'
+    }).then((result) => {
+      if (result.value) {
 
-    localStorage.setItem("funkoKey", JSON.stringify(datosFiltrados));
-    leerProductos();
-    listaFunkos = datosFiltrados;
+        let datosFiltrados = _listaFunkos.filter(function (producto) {
+          return producto.codigo != botonEliminar.id;
+        });
+    
+        localStorage.setItem("funkoKey", JSON.stringify(datosFiltrados));
+        leerProductos();
+        listaFunkos = datosFiltrados;
+
+        Swal.fire(
+          'Funko eliminado!',
+          'Tu producto fue eliminado correctamente.',
+          'success'
+        );
+      } else {
+        Swal.fire(
+          'Cancelado!',
+          'Tu producto esta a salvo.',
+          'info'
+        );
+      }
+    })
+
+    
   }
 };
 
@@ -136,7 +181,42 @@ window.agregarModificar = function (event) {
     agregarFunko();
   } else {
     //modificar un producto
-    guardarProductoModificado();
+    const swalWithBootstrapButtons = Swal.mixin({
+      customClass: {
+        confirmButton: 'btn btn-success',
+        cancelButton: 'btn btn-danger'
+      },
+      buttonsStyling: false
+    })
+    
+    swalWithBootstrapButtons.fire({
+      title: 'Seguro que desea editar el producto?',
+      text: "No podras revertir una vez modificado!",
+      icon: 'question',
+      showCancelButton: true,
+      confirmButtonText: 'Modificar!',
+      cancelButtonText: 'No, cancelar!',
+      reverseButtons: true
+    }).then((result) => {
+      if (result.value) {
+        guardarProductoModificado();
+        swalWithBootstrapButtons.fire(
+          'Modificado!',
+          'Tu producto fue editado con exito.',
+          'success'
+        )
+      } else if (
+        /* Read more about handling dismissals below */
+        result.dismiss === Swal.DismissReason.cancel
+      ) {
+        swalWithBootstrapButtons.fire(
+          'Cancelado',
+          'Los cambios no se guardaron. Tu producto está a salvo',
+          'error'
+        )
+      }
+    });
+    
   }
 };
 
